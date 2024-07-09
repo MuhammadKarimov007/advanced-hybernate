@@ -18,8 +18,16 @@ public class AdvancedHybernateApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(AppDAO appDAO) {
 		return runner -> {
-			createInstructor(appDAO);
+			//createInstructor(appDAO);
+			findInstructor(appDAO);
 		};
+	}
+
+	private void findInstructor(AppDAO appDAO) {
+		System.out.println("Finding instructor id: " + 1);
+		Instructor instructor = appDAO.findInstructorById(1);
+		System.out.println(instructor);
+		System.out.println("Instructor details only: " + instructor.getInstructorDetail());
 	}
 
 	private void createInstructor(AppDAO appDAO) {
