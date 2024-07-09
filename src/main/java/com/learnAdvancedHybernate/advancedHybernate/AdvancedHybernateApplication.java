@@ -19,13 +19,21 @@ public class AdvancedHybernateApplication {
 	public CommandLineRunner commandLineRunner(AppDAO appDAO) {
 		return runner -> {
 			//createInstructor(appDAO);
-			findInstructor(appDAO);
+			//findInstructor(appDAO);
+			deleteInstructor(appDAO);
 		};
 	}
 
+	private void deleteInstructor(AppDAO appDAO) {
+		int id = 1;
+		System.out.println("Deleting the instructor id: " + id);
+		appDAO.deleteInstructorById(id);
+		System.out.println("Already deleted the instructor.");
+	}
+
 	private void findInstructor(AppDAO appDAO) {
-		System.out.println("Finding instructor id: " + 1);
-		Instructor instructor = appDAO.findInstructorById(1);
+		System.out.println("Finding instructor id: " + 2);
+		Instructor instructor = appDAO.findInstructorById(2);
 		System.out.println(instructor);
 		System.out.println("Instructor details only: " + instructor.getInstructorDetail());
 	}
