@@ -21,8 +21,19 @@ public class AdvancedHybernateApplication {
 			//createInstructor(appDAO);
 			//findInstructor(appDAO);
 			//deleteInstructor(appDAO);
-			findInstructorDetail(appDAO);
+			//findInstructorDetail(appDAO);
+			deleteInstructorDetail(appDAO);
 		};
+	}
+
+	private void deleteInstructorDetail(AppDAO appDAO) {
+		int id = 3;
+
+		System.out.println("deleting instructor detail id: " + id);
+
+		appDAO.deleteInstructorDetailById(id);
+
+		System.out.println("Done");
 	}
 
 	private void findInstructorDetail(AppDAO appDAO) {
@@ -50,9 +61,14 @@ public class AdvancedHybernateApplication {
 	}
 
 	private void createInstructor(AppDAO appDAO) {
-		Instructor tempInstructor = new Instructor("Chad", "Darby", "hi@com");
+		Instructor tempInstructor = new Instructor(
+				"Chad",
+				"Darby",
+				"hi@com");
 
-		InstructorDetail tempInstructorDetail = new InstructorDetail("youtube channel", "Luv 2 code");
+		InstructorDetail tempInstructorDetail = new InstructorDetail(
+				"youtube channel",
+				"Luv 2 code");
 
 		tempInstructor.setInstructorDetail(tempInstructorDetail);
 
