@@ -1,11 +1,15 @@
 package com.learnAdvancedHybernate.advancedHybernate.dao;
 
+import com.learnAdvancedHybernate.advancedHybernate.entity.Course;
 import com.learnAdvancedHybernate.advancedHybernate.entity.Instructor;
 import com.learnAdvancedHybernate.advancedHybernate.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class AppDAOImpl implements AppDAO{
@@ -51,5 +55,27 @@ public class AppDAOImpl implements AppDAO{
         // the particular InstructorDetail object, we also implicitly
         // delete the associated Instructor object as well
         entityManager.remove(tempInstructor);
+    }
+
+    @Override
+    public List<Course> findCoursesByInstructorId(int id) {
+        TypedQuery<Course> query = entityManager.createQuery(
+                "from Course where instructor.id = :data", Course.class
+        );
+
+        query.setParameter("data", id);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public Instructor findCoursesByInstructorIdJoinFetch(int id) {
+        TypedQuery<Instructor> query = entityManager.createQuery(
+          "select i from Instructor i Join fetch  i.courseList " +
+                  "where i.id = :data", Instructor.class
+        );
+        query.setParameter("data", id);
+
+        return query.getSingleResult();
     }
 }

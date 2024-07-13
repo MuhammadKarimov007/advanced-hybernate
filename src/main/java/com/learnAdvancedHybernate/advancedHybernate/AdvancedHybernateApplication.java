@@ -4,10 +4,13 @@ import com.learnAdvancedHybernate.advancedHybernate.dao.AppDAO;
 import com.learnAdvancedHybernate.advancedHybernate.entity.Course;
 import com.learnAdvancedHybernate.advancedHybernate.entity.Instructor;
 import com.learnAdvancedHybernate.advancedHybernate.entity.InstructorDetail;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 
 @SpringBootApplication
 public class AdvancedHybernateApplication {
@@ -24,8 +27,62 @@ public class AdvancedHybernateApplication {
 			//deleteInstructor(appDAO);
 			//findInstructorDetail(appDAO);
 			//deleteInstructorDetail(appDAO);
-			createInstructorWithCourses(appDAO);
+			//createInstructorWithCourses(appDAO);
+			//findInstructorWithCourses(appDAO);
+			//findCoursesForInstructor(appDAO);
+			findInstructorWithCoursesJoinFetch(appDAO);
 		};
+	}
+
+	private void findInstructorWithCoursesJoinFetch(AppDAO appDAO) {
+		int id = 1;
+
+		System.out.println("Finding the instructor with the id: " + id);
+
+		Instructor instructor = appDAO.findCoursesByInstructorIdJoinFetch(id);
+
+		System.out.println("instructor: " + instructor);
+
+		System.out.println("Associated courses: ");
+		for (Course course : instructor.getCourseList()) {
+			System.out.println(course);
+		}
+
+		System.out.println("Done");
+	}
+
+	private void findCoursesForInstructor(AppDAO appDAO) {
+		int id = 1;
+		System.out.println("Finding instructor id: " + id);
+
+		Instructor instructor = appDAO.findInstructorById(id);
+
+		System.out.println("instructor: " + instructor);
+
+		System.out.println("Finding courses for instructor id: " + id);
+
+		List<Course> courseList = appDAO.findCoursesByInstructorId(id);
+
+		instructor.setCourseList(courseList);
+
+		System.out.println("Associated Courses:");
+		for (Course course : courseList) {
+			System.out.println(course);
+		}
+		System.out.println("Done");
+	}
+
+	private void findInstructorWithCourses(AppDAO appDAO) {
+		int id = 1;
+		System.out.println("Finding instructor id: " + id);
+
+		Instructor instructor = appDAO.findInstructorById(id);
+
+		System.out.println("instructor: " + instructor);
+
+		System.out.println("associated courses: " + instructor.getCourseList());
+
+		System.out.println("Done");
 	}
 
 	private void createInstructorWithCourses(AppDAO appDAO) {
