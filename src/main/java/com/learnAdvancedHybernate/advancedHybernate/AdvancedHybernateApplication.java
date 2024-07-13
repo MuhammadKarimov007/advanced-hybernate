@@ -32,8 +32,18 @@ public class AdvancedHybernateApplication {
 			//findCoursesForInstructor(appDAO);
 			//findInstructorWithCoursesJoinFetch(appDAO);
 			//updateInstructor(appDAO);
-			updateCourse(appDAO);
+			//updateCourse(appDAO);
+			deleteCourse(appDAO);
 		};
+	}
+
+	private void deleteCourse(AppDAO appDAO) {
+		int id = 10;
+		System.out.println("Deleting the course id: " + id);
+
+		appDAO.deleteCourseById(id);
+
+		System.out.println("Done");
 	}
 
 	private void updateCourse(AppDAO appDAO) {
