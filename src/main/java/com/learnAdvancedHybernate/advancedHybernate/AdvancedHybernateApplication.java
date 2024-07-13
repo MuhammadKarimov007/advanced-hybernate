@@ -1,6 +1,7 @@
 package com.learnAdvancedHybernate.advancedHybernate;
 
 import com.learnAdvancedHybernate.advancedHybernate.dao.AppDAO;
+import com.learnAdvancedHybernate.advancedHybernate.entity.Course;
 import com.learnAdvancedHybernate.advancedHybernate.entity.Instructor;
 import com.learnAdvancedHybernate.advancedHybernate.entity.InstructorDetail;
 import org.springframework.boot.CommandLineRunner;
@@ -22,8 +23,38 @@ public class AdvancedHybernateApplication {
 			//findInstructor(appDAO);
 			//deleteInstructor(appDAO);
 			//findInstructorDetail(appDAO);
-			deleteInstructorDetail(appDAO);
+			//deleteInstructorDetail(appDAO);
+			createInstructorWithCourses(appDAO);
 		};
+	}
+
+	private void createInstructorWithCourses(AppDAO appDAO) {
+		Instructor tempInstructor = new Instructor(
+				"Susan",
+				"Public",
+				"susani@com");
+
+		InstructorDetail tempInstructorDetail = new InstructorDetail(
+				"youtube channel",
+				"ultimate gamer");
+
+		tempInstructor.setInstructorDetail(tempInstructorDetail);
+
+		Course course1 = new Course("Guitar - The ultimate Guide");
+		Course course2 = new Course("Pinball - The ultimate Guide");
+		Course course3 = new Course("Golf - The ultimate Guide");
+
+		tempInstructor.add(course1);
+		tempInstructor.add(course2);
+		tempInstructor.add(course3);
+
+		System.out.println("Saving instructor: " + tempInstructor);
+		System.out.println("The courses: " + tempInstructor.getCourseList());
+		appDAO.save(tempInstructor);
+
+		System.out.println("Done");
+
+
 	}
 
 	private void deleteInstructorDetail(AppDAO appDAO) {
