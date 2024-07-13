@@ -78,4 +78,10 @@ public class AppDAOImpl implements AppDAO{
 
         return query.getSingleResult();
     }
+
+    @Override
+    @Transactional
+    public void update(Instructor instructor) {
+        entityManager.merge(instructor);
+    }
 }

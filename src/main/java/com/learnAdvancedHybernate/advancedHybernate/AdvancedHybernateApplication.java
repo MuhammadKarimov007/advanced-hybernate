@@ -30,8 +30,24 @@ public class AdvancedHybernateApplication {
 			//createInstructorWithCourses(appDAO);
 			//findInstructorWithCourses(appDAO);
 			//findCoursesForInstructor(appDAO);
-			findInstructorWithCoursesJoinFetch(appDAO);
+			//findInstructorWithCoursesJoinFetch(appDAO);
+			updateInstructor(appDAO);
 		};
+	}
+
+	private void updateInstructor(AppDAO appDAO) {
+		int id = 1;
+
+		Instructor instructor = appDAO.findInstructorById(id);
+
+		System.out.println("Finding the instructor id: " + id);
+
+		System.out.println("Updating instructor details:");
+		instructor.setLastName("TESTER UPDATED");
+
+		appDAO.update(instructor);
+
+		System.out.println("DONE");
 	}
 
 	private void findInstructorWithCoursesJoinFetch(AppDAO appDAO) {
