@@ -4,6 +4,7 @@ import com.learnAdvancedHybernate.advancedHybernate.dao.AppDAO;
 import com.learnAdvancedHybernate.advancedHybernate.entity.Course;
 import com.learnAdvancedHybernate.advancedHybernate.entity.Instructor;
 import com.learnAdvancedHybernate.advancedHybernate.entity.InstructorDetail;
+import com.learnAdvancedHybernate.advancedHybernate.entity.Review;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -33,8 +34,33 @@ public class AdvancedHybernateApplication {
 			//findInstructorWithCoursesJoinFetch(appDAO);
 			//updateInstructor(appDAO);
 			//updateCourse(appDAO);
-			deleteCourse(appDAO);
+			//deleteCourse(appDAO);
+			//createCourseAndReviews(appDAO);
+			retrieveCourseAndReviews(appDAO);
 		};
+	}
+
+	private void retrieveCourseAndReviews(AppDAO appDAO) {
+		int id = 1;
+		Course course = appDAO.findCourseAndReviewsByCourseId(id);
+		System.out.println(course);
+		System.out.println(course.getReviews());
+		System.out.println("Done!");
+	}
+
+	private void createCourseAndReviews(AppDAO appDAO) {
+		Course course = new Course("Reading for health");
+
+		course.addReview(new Review("Great course"));
+		course.addReview(new Review("Well course, well done"));
+		course.addReview(new Review("What a dumb course, you are an idiot"));
+		course.addReview(new Review("You are great instructor, bro"));
+		course.addReview(new Review("Yahoo"));
+
+		System.out.println("Saving the course...");
+		System.out.println(course.getReviews());
+		appDAO.save(course);
+		System.out.println("Done");
 	}
 
 	private void deleteCourse(AppDAO appDAO) {
